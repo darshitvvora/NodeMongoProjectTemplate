@@ -1,15 +1,15 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/templates              ->  index
- * POST    /api/templates              ->  create
- * GET     /api/templates/:id          ->  show
- * PUT     /api/templates/:id          ->  upsert
- * PATCH   /api/templates/:id          ->  patch
- * DELETE  /api/templates/:id          ->  destroy
+ * GET     /api/resumes              ->  index
+ * POST    /api/resumes              ->  create
+ * GET     /api/resumes/:id          ->  show
+ * PUT     /api/resumes/:id          ->  upsert
+ * PATCH   /api/resumes/:id          ->  patfch
+ * DELETE  /api/resumes/:id          ->  destroy
  */
 
 import { applyPatch } from 'fast-json-patch';
-import Template from './template.model';
+import Resume from './resume.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -59,53 +59,53 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Templates
+// Gets a list of Resumes
 export function index(req, res) {
-  return Template.find().exec()
+  return Resume.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Template from the DB
+// Gets a single Resume from the DB
 export function show(req, res) {
-  return Template.findById(req.params.id).exec()
+  return Resume.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Template in the DB
+// Creates a new Resume in the DB
 export function create(req, res) {
-  return Template.create(req.body)
+  return Resume.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given Template in the DB at the specified ID
+// Upserts the given Resume in the DB at the specified ID
 export function upsert(req, res) {
   if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Template.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }).exec()
+  return Resume.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Template in the DB
+// Updates an existing Resume in the DB
 export function patch(req, res) {
   if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Template.findById(req.params.id).exec()
+  return Resume.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Template from the DB
+// Deletes a Resume from the DB
 export function destroy(req, res) {
-  return Template.findById(req.params.id).exec()
+  return Resume.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

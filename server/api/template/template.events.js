@@ -1,33 +1,34 @@
 /**
- * Thing model events
+ * User model events
  */
 
-import {EventEmitter} from 'events';
-var ThingEvents = new EventEmitter();
+import { EventEmitter } from 'events';
+
+const TemplateEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-ThingEvents.setMaxListeners(0);
+TemplateEvents.setMaxListeners(0);
 
 // Model events
-var events = {
-    save: 'save',
-    remove: 'remove'
+const events = {
+  save: 'save',
+  remove: 'remove',
 };
 
 // Register the event emitter to the model events
-function registerEvents(Thing) {
-    for(var e in events) {
-        let event = events[e];
-        Thing.post(e, emitEvent(event));
-    }
+function registerEvents(User) {
+  for (const e in events) {
+    const event = events[e];
+    User.post(e, emitEvent(event));
+  }
 }
 
 function emitEvent(event) {
-    return function(doc) {
-        ThingEvents.emit(`${event}:${doc._id}`, doc);
-        ThingEvents.emit(event, doc);
-    };
+  return function (doc) {
+    TemplateEvents.emit(`${event}:${doc._id}`, doc);
+    TemplateEvents.emit(event, doc);
+  };
 }
 
-export {registerEvents};
-export default ThingEvents;
+export { registerEvents };
+export default TemplateEvents;

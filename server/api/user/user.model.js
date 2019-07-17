@@ -1,11 +1,31 @@
 import mongoose from 'mongoose';
-import {registerEvents} from './thing.events';
+import { registerEvents } from './user.events';
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
-var ThingSchema = new mongoose.Schema({
-    name: String,
-    info: String,
-    active: Boolean
+const UserSchema = new mongoose.Schema({
+  first_name: {
+      type: String,
+      required: true,
+      trim: true,
+  },
+  last_name: {
+      type: String,
+      trim: true,
+  },
+  email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+  },
+  phone:[String],
+  active: Boolean,
+  created_on: { type: Date, default: Date.now },
+  updated_on: Date,
+  updated_by: ObjectId,
+  deleted_on: Date,
+  deleted_by: ObjectId
 });
 
-registerEvents(ThingSchema);
-export default mongoose.model('Thing', ThingSchema);
+registerEvents(UserSchema);
+export default mongoose.model('User', UserSchema);

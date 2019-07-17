@@ -1,84 +1,84 @@
 /* globals sinon, describe, expect, it */
 
-var proxyquire = require('proxyquire').noPreserveCache();
+const proxyquire = require('proxyquire').noPreserveCache();
 
-var thingCtrlStub = {
-    index: 'thingCtrl.index',
-    show: 'thingCtrl.show',
-    create: 'thingCtrl.create',
-    upsert: 'thingCtrl.upsert',
-    patch: 'thingCtrl.patch',
-    destroy: 'thingCtrl.destroy'
+const templateCtrlStub = {
+  index: 'templateCtrl.index',
+  show: 'templateCtrl.show',
+  create: 'templateCtrl.create',
+  upsert: 'templateCtrl.upsert',
+  patch: 'templateCtrl.patch',
+  destroy: 'templateCtrl.destroy',
 };
 
-var routerStub = {
-    get: sinon.spy(),
-    put: sinon.spy(),
-    patch: sinon.spy(),
-    post: sinon.spy(),
-    delete: sinon.spy()
+const routerStub = {
+  get: sinon.spy(),
+  put: sinon.spy(),
+  patch: sinon.spy(),
+  post: sinon.spy(),
+  delete: sinon.spy(),
 };
 
 // require the index with our stubbed out modules
-var thingIndex = proxyquire('./index.js', {
-    express: {
-        Router() {
-            return routerStub;
-        }
+const templateIndex = proxyquire('./index.js', {
+  express: {
+    Router() {
+      return routerStub;
     },
-    './thing.controller': thingCtrlStub
+  },
+  './template.controller': templateCtrlStub,
 });
 
-describe('Thing API Router:', function() {
-    it('should return an express router instance', function() {
-        expect(thingIndex).to.equal(routerStub);
-    });
+describe('Template API Router:', () => {
+  it('should return an express router instance', () => {
+    expect(templateIndex).to.equal(routerStub);
+  });
 
-    describe('GET /api/things', function() {
-        it('should route to thing.controller.index', function() {
-            expect(routerStub.get
-        .withArgs('/', 'thingCtrl.index')
-        ).to.have.been.calledOnce;
-        });
+  describe('GET /api/templates', () => {
+    it('should route to template.controller.index', () => {
+      expect(routerStub.get
+        .withArgs('/', 'templateCtrl.index'),
+      ).to.have.been.calledOnce;
     });
+  });
 
-    describe('GET /api/things/:id', function() {
-        it('should route to thing.controller.show', function() {
-            expect(routerStub.get
-        .withArgs('/:id', 'thingCtrl.show')
-        ).to.have.been.calledOnce;
-        });
+  describe('GET /api/templates/:id', () => {
+    it('should route to template.controller.show', () => {
+      expect(routerStub.get
+        .withArgs('/:id', 'templateCtrl.show'),
+      ).to.have.been.calledOnce;
     });
+  });
 
-    describe('POST /api/things', function() {
-        it('should route to thing.controller.create', function() {
-            expect(routerStub.post
-        .withArgs('/', 'thingCtrl.create')
-        ).to.have.been.calledOnce;
-        });
+  describe('POST /api/templates', () => {
+    it('should route to template.controller.create', () => {
+      expect(routerStub.post
+        .withArgs('/', 'templateCtrl.create'),
+      ).to.have.been.calledOnce;
     });
+  });
 
-    describe('PUT /api/things/:id', function() {
-        it('should route to thing.controller.upsert', function() {
-            expect(routerStub.put
-        .withArgs('/:id', 'thingCtrl.upsert')
-        ).to.have.been.calledOnce;
-        });
+  describe('PUT /api/templates/:id', () => {
+    it('should route to template.controller.upsert', () => {
+      expect(routerStub.put
+        .withArgs('/:id', 'templateCtrl.upsert'),
+      ).to.have.been.calledOnce;
     });
+  });
 
-    describe('PATCH /api/things/:id', function() {
-        it('should route to thing.controller.patch', function() {
-            expect(routerStub.patch
-        .withArgs('/:id', 'thingCtrl.patch')
-        ).to.have.been.calledOnce;
-        });
+  describe('PATCH /api/templates/:id', () => {
+    it('should route to template.controller.patch', () => {
+      expect(routerStub.patch
+        .withArgs('/:id', 'templateCtrl.patch'),
+      ).to.have.been.calledOnce;
     });
+  });
 
-    describe('DELETE /api/things/:id', function() {
-        it('should route to thing.controller.destroy', function() {
-            expect(routerStub.delete
-        .withArgs('/:id', 'thingCtrl.destroy')
-        ).to.have.been.calledOnce;
-        });
+  describe('DELETE /api/templates/:id', () => {
+    it('should route to template.controller.destroy', () => {
+      expect(routerStub.delete
+        .withArgs('/:id', 'templateCtrl.destroy'),
+      ).to.have.been.calledOnce;
     });
+  });
 });

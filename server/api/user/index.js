@@ -1,7 +1,7 @@
-var express = require('express');
-var controller = require('./thing.controller');
+const express = require('express');
+const controller = require('./user.controller');
 
-var router = express.Router();
+const router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);

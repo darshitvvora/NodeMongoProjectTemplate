@@ -1,13 +1,13 @@
 /**
- * User model events
+ * Resume model events
  */
 
 import { EventEmitter } from 'events';
 
-const UserEvents = new EventEmitter();
+const ResumeEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-UserEvents.setMaxListeners(0);
+ResumeEvents.setMaxListeners(0);
 
 // Model events
 const events = {
@@ -16,19 +16,19 @@ const events = {
 };
 
 // Register the event emitter to the model events
-function registerEvents(User) {
+function registerEvents(Resume) {
   for (const e in events) {
     const event = events[e];
-    User.post(e, emitEvent(event));
+    Resume.post(e, emitEvent(event));
   }
 }
 
 function emitEvent(event) {
   return function (doc) {
-    UserEvents.emit(`${event}:${doc._id}`, doc);
-    UserEvents.emit(event, doc);
+    ResumeEvents.emit(`${event}:${doc._id}`, doc);
+    ResumeEvents.emit(event, doc);
   };
 }
 
 export { registerEvents };
-export default UserEvents;
+export default ResumeEvents;

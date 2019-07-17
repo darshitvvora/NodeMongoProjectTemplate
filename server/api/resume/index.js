@@ -1,5 +1,5 @@
 const express = require('express');
-const controller = require('./template.controller');
+const controller = require('./resume.controller');
 
 const router = express.Router();
 
