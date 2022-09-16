@@ -63,7 +63,7 @@
     "babel-plugin-transform-class-properties": "^6.6.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.16.0",
-    "bootstrap": "~3.3.7",
+    "bootstrap": "~3.4.1",
     "bootstrap-sass": "~3.3.7",
     "bs-fullscreen-message": "^1.0.0",
     "chai": "^4.1.2",
